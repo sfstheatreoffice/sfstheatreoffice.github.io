@@ -1,0 +1,173 @@
+@charset "UTF-8";
+/* CSS Document */
+
+html,
+html * {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: arial, sans-serif;
+	font-size: 1vw;
+	background: white;
+}
+
+header {
+	position: fixed;
+	padding: 1.5em;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: rgba(0,0,0,0.5);
+}
+
+h1 {
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 8.5em;
+	letter-spacing: .85em;
+}
+
+/* NAVIGATION */
+
+nav {
+	z-index: 400;
+	top: 0;
+	left: 0;
+	opacity: 0.95;
+	background: #fff;
+	position: relative;
+	display: block !important;
+	float: right;
+	width: 30%;
+	padding: .75em 1em 0 0;
+	height: 2em;
+}
+
+.site-nav {
+	position: relative;
+	float: right;
+	z-index: 400;
+	top: 0;
+	left: 0;
+	display: block !important;
+	width: 80%;
+	padding: .75em 1em 0 0;
+	opacity: 100;
+	background: none;
+}
+
+.site-nav ul {
+	list-style-type: none;
+	margin: 0;
+	text-align: right;
+}
+
+.site-nav ul li {
+	display: inline-block;
+	margin-bottom: 0;
+	margin-left: 1.5em;
+}
+
+.site-nav ul li a {
+	font-size: 1em;
+	padding-bottom: .5em;
+	text-decoration: none;
+	letter-spacing: .15em;
+	text-transform: uppercase;
+	color: #fff;
+	-webkit-transition: color .3s;
+	transition: color .3s;
+}
+
+.site-nav ul li a:hover {
+	outline: none;
+	border-bottom: 1px solid white;
+}
+
+.hero {
+	position: relative;
+	height: 54vw;
+	background-color: #a2f92f;
+	background-image: url(images/events/tempest_korean.jpg);
+	background-position: top center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	animation-direction: normal;
+	animation-fill-mode: forwards;
+}
+
+.intro {
+	position: relative;
+	color: #343144;
+	background: #fff;
+	padding: 9em 6em 9em;
+}
+
+.intro p {
+	font-family: 'acumin-pro-extra-condensed', sans-serif;
+	color: #000;
+	position: relative;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 2.5em;
+	line-height: 1.8;
+	letter-spacing: .325em;
+}
+
+.artworks {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+.artwork {
+	display: flex;
+}
+
+.artwork .artwork-piece {
+  padding: 8% 0 8% 23.5%;
+  background-image: url(images/events/tempest_korean.jpg);
+	background-size: cover;
+  width: 50%;
+}
+
+.artwork figure {
+  position: relative;
+  vertical-align: middle;
+  padding: 50% 10%;
+  background: #cef0f2;
+}
+
+.artwork .artwork-description {
+  background: #26223e;
+  width: 50%;
+  padding: 11.25em 10em 11.5em;
+}
+
+/* FOOTER */
+
+footer {
+  margin-top: -3em;
+  padding: 8.75em 0 2em;
+  height: 40vw;
+  background-image: url(images/Mainstage.jpg);
+	background-size: cover;
+	background-position: top center;
+	background-repeat: no-repeat;
+	background-color: #000;
+}
+
+.footer-content {
+	width: 64%;
+	margin: 0 auto;
+	padding-bottom: 1.7em;
+	text-align: center;
+}
+
+footer p {
+	color: #fff;
+}
