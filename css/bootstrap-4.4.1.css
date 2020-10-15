@@ -5243,7 +5243,7 @@ a.badge-dark:focus, a.badge-dark.focus {
 .jumbotron {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
-  background-image: url("../images/Mainstage.jpg");
+  background-image: url("/images/Mainstage.jpg");
   background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
