@@ -20,13 +20,17 @@
         event: 'tempest-oct29'
     }).render();
 	
-	console.log(seatingChart.selectedObjects);	
+	console.log(seatingChart.selectedObjects);								
 </script>
 
-<script>
-	document.write(seatingChart);
+	<script>
+	let client = new SeatsioClient(<4cc2a655-93d3-44d5-bbef-4944ec095389
+>)
 
-</script>
+for await(let chart of client.charts.listAll()){
+    console.log(`Chart key: ${chart.key}`)
+}
+	</script>
 	
 </body>
 	
