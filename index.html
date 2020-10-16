@@ -14,11 +14,13 @@
 <div id="chart"></div>
 <script src="https://cdn.seatsio.net/chart.js"></script>
 <script>
-    new seatsio.SeatingChart({
+    var seatingChart = new seatsio.SeatingChart({
         divId: 'chart',
         workspaceKey: 'ed7c1f20-2710-47a9-bb68-5a593bf57e2c',
         event: 'tempest-oct29'
     }).render();
+	
+	console.log(seatingChart.selectedObjects);
 </script>
 	
 </body>
