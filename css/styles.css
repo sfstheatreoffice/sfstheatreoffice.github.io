@@ -1,0 +1,66 @@
+/* Main Styles */
+
+body {
+  background-color: white;
+  font-family: 'Quicksand', sans-serif;
+}
+
+h2{
+  font-family: 'Quicksand', sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+h3{
+  font-family: 'Quicksand', sans-serif;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+h4{
+  font-family: 'Quicksand', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Admin Tabbed Navigation */
+
+/* Classes */
+
+.italics {
+  font-style: italic;
+  font-size: 12px;
+}
+
+.eventposter {
+display: block;
+  width: 100%;
+  height: 250px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.accordianposter {
+  width: 75px;
+  height: 100px;
+}
+
+.eventpageposter{
+  width: 100%;
+  height: 300px;
+}
+
+.spacer16 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.spacer32 {
+  margin-bottom: 32px;
+}
+
+/* ID's */
+
+#checkout{
+  width: ;
+}
