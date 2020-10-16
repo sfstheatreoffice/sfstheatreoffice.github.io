@@ -1,37 +1,365 @@
 <!DOCTYPE html>
-<html lang="en">
-	
-  <head>
-	  
-    <meta charset="UTF-8">
-	  
-    <title>SFS Theatre Office</title>
-	  
-  </head>
-	
-<body>
-	
-<div id="chart"></div>
-<script src="https://cdn.seatsio.net/chart.js"></script>
+
+<html>
+
+<head>
+
+<title> SFS Box Office</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<script src="index.js"></script>
+
+<!-- Firebase Integration -->
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-database.js"></script>
+
 <script>
-    var seatingChart = new seatsio.SeatingChart({
-        divId: 'chart',
-        workspaceKey: 'ed7c1f20-2710-47a9-bb68-5a593bf57e2c',
-        event: 'tempest-oct29'
-    }).render();
-	
-	console.log(seatingChart.selectedObjects);								
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyALSTeaBrQWxGiBimQxk4jDVtcCPMkF_eI",
+    authDomain: "sfs-box-office.firebaseapp.com",
+    databaseURL: "https://sfs-box-office.firebaseio.com",
+    projectId: "sfs-box-office",
+    storageBucket: "sfs-box-office.appspot.com",
+    messagingSenderId: "733611101228",
+    appId: "1:733611101228:web:18c7645e184459b0e05589",
+    measurementId: "G-R38RZVG8F8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 </script>
 
-	<script>
-	let client = new SeatsioClient(<4cc2a655-93d3-44d5-bbef-4944ec095389
->)
+</head>
 
-for await(let chart of client.charts.listAll()){
-    console.log(`Chart key: ${chart.key}`)
-}
-	</script>
-	
+<body>
+
+  <!-- Navigation Bar (fixed at top) -->
+
+  <div class="w3-top">
+    <div class="w3-bar w3-white w3-padding w3-card">
+      <!-- Float log-in icon to the left -->
+      <a class="w3-bar-item w3-button w3-left" onclick="signin()"><i class="material-icons">account_circle</i></a>
+      <!-- Float links to the right...collapse on small screens -->
+      <div class="w3-right">
+        <a href="#DramaList" class="w3-bar-item w3-button w3-hide-small">Drama Events</a>
+        <a href="#MusicList" class="w3-bar-item w3-button w3-hide-small">Music Events</a>
+        <a href="#Contact" class="w3-bar-item w3-button w3-hide-small">Contact</a>
+        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="collapsenav()">&#9776;</a>
+      </div>
+
+      <div class="w3-hide w3-hide-large w3-hide-medium w3-right" id="navright">
+        <a href="#DramaList" class="w3-bar-item w3-button">Drama Events</a>
+        <a href="#MusicList" class="w3-bar-item w3-button">Music Events</a>
+        <a href="#Contact" class="w3-bar-item w3-button">Contact</a>
+      </div>
+
+    </div>
+  </div>
+
+<!-- Header -->
+
+<header class="w3-display-container w3-content w3-wide" style="max-width:1600px; margin-top:60px" id="home">
+  <a href="index.html"><img class="w3-image" src="assets/header1.png" alt="Mainstage" width="1600" height="400"></a>
+</header>
+
+<!-- Admin Sign-in Modal -->
+
+<div id="signin" class="w3-modal">
+  <div class="w3-modal-content w3-card-4 w3-animate-top" style="max-width: 500px">
+
+    <header class="w3-container">
+      <span onclick="document.getElementById('signin').style.display='none'"
+        class="w3-button w3-display-topright">&times;</span>
+      <h2>Admin Log In</h2>
+    </header>
+
+    <form class="w3-container" action="admin.html">
+      <div class="w3-section">
+        <label><b>Username</b></label>
+        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter Username" name="usrname" required>
+        <label><b>Password</b><label>
+        <input class="w3-input w3-border" type="password" placeholder="Enter Password" name="psw" required>
+        <button class="w3-button w3-block w3-blue-gray w3-section w3-padding" type="submit">Login</button>
+        <input class="w3-check w3-margin-top" type="checkbox">Remember<menu>
+      </div>
+    </form>
+
+    <div class="w3-container">
+    <p class="italics">*Sign-in is currently available only
+      for Box Office administrators.  Member sign-in will be coming soon!</p>
+    </div>
+
+    <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+      <button onclick="document.getElementById('signin').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+      <span class="w3-right w3-padding">Forgot <a href="#">password?</a></span>
+    </div>
+
+  </div>
+</div>
+
+<!-- Page Content -->
+
+<div class="w3-content w3-padding" style="max-width: 1100px">
+
+<!-- Welcome message -->
+
+<div class="w3-container w3-padding-32" id="welcome">
+  <h3>Welcome!</h3>
+  <p>Welcome to the new SFS Box Office webpage! We are in the process of developing
+    this site to streamline and customize the event ticketing process and user
+    experience specifically for the SFS community. We hope that your experience
+    using this system is positive.  We are continually working to improve this new
+    platform, so please feel free to give us feedback either in person or using the
+    contact form available on the contact page of this site.
+  </p>
+  <p>John Black<br>Theatre Manager</p>
+</div>
+
+<!-- On Sale Card -->
+
+<!-- Drama List -->
+
+<div class="w3-container w3-padding-32" id="DramaList">
+  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Drama Productions</h3>
+</div>
+
+<!-- Row 1 -->
+
+<div class="w3-row-padding">
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Oct 1-2
+      </div>
+        <a href="mermaid.html"><img src="assets/showposter1.jpg" alt="Show1" style="width=50%" class="w3-hover-opacity"></a>
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Nov 1-2
+      </div>
+        <a href="charlie.html"><img src="assets/showposter2.jpg" alt="Show2" style="width=50%" class="w3-hover-opacity"></a>
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Feb 20-21
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show3" style="width=50%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Mar 20-21
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show4" style="width=50%">
+    </div>
+  </div>
+
+</div>
+
+<!-- Row 2 -->
+
+<div class="w3-row-padding">
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Oct 1-2
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show5" style="width=100%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Nov 1-2
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show6" style="width=100%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Feb 20-21
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show7" style="width=100%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Mar 20-21
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show8" style="width=100%">
+    </div>
+  </div>
+
+</div>
+
+<!-- Music List -->
+
+<div class="w3-container w3-padding-32" id="MusicList">
+  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Music Concerts</h3>
+</div>
+
+<!-- Row 1 -->
+
+<div class="w3-row-padding">
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Oct 1-2
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show1" style="width=50%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Nov 1-2
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show2" style="width=50%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Feb 20-21
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show3" style="width=50%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Mar 20-21
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show4" style="width=50%">
+    </div>
+  </div>
+
+</div>
+
+<!-- Row 2 -->
+
+<div class="w3-row-padding">
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Oct 1-2
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show5" style="width=100%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Nov 1-2
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show6" style="width=100%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Feb 20-21
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show7" style="width=100%">
+    </div>
+  </div>
+
+  <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-display-container">
+      <div class="w3-display-topleft w3-black w3-padding">Mar 20-21
+      </div>
+        <img src="assets/showposter1.jpg" alt="Show8" style="width=100%">
+    </div>
+  </div>
+
+</div>
+
+<!-- Contact  -->
+
+<div class="w3-container w3-padding-32" id="Contact">
+  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Contact</h3>
+</div>
+
+<div class="w3-row-padding">
+
+<!-- Office Information -->
+
+<div class="w3-col l6 w3-margin-bottom">
+
+<h3 class="w3-padding-16">Visit Us</h3>
+
+<h5>Location</h5>
+<p>1st Floor - L106<br>
+Lyso Center for the Performing Arts
+</p>
+
+<h5>Phone</h5>
+<p>330-3100 ext. 17106
+</p>
+
+<h5>Hours</h5>
+<p>The Theatre Office is open during regular school hours (8:00am-5:00pm) on workdays.
+  Due to the theatre event schedule, the office may not be staffed during the entire workday.
+  We try to make sure that the office is staffed from 8:00am-9:00am and 3:00pm-5:00pm daily.
+</p>
+
+</div>
+
+<!-- Contact Form -->
+
+  <div class="w3-col l6 w3-margin-bottom">
+
+  <h3 class="w3-padding-16">Send a Message</h3>
+  <p>Please use the following form to send us a message. We appreciate your feedback or
+    suggestions and will respond as soon as we can!</p>
+
+  <form action="/action_page.php" target="_blank">
+    <input class="w3-input w3-border" type="text" placeholder="Your Name" required name="Name">
+    <input class="w3-input w3-section w3-border" type="text" placeholder="Your Email" required name="Email">
+    <textarea class="w3-input w3-section w3-border" type="text" placeholder="Your Message" required name="Your Message" style="height:150px"></textarea>
+    <button class="w3-button w3-black w3-section" type="submit">
+        SEND MESSAGE
+    </button>
+  </form>
+
+</div>
+
+</div>
+</div>
+
+<!-- Footer -->
+
+<footer class="w3-center w3-padding-16 w3-black">
+  <p>(c) 2020 SFS Theatre Office<br>
+  Box Office Developed By<br>
+  John Black & David Black</p>
+</footer>
+
+<!-- End Page Content -->
+</div>
+
+<!-- Page Scripts -->
+
 </body>
-	
+
 </html>
