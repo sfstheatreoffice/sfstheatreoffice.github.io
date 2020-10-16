@@ -33,9 +33,12 @@ h4{
 }
 
 .eventposter {
-display: block;
+  display: block;
   width: 100%;
-  height: 250px;
+  height: 300px;
+  background-image: url(../images/events/tempest_kor.jpg);
+  background-size: cover;
+  background-position: top center;
   margin-left: auto;
   margin-right: auto;
 }
