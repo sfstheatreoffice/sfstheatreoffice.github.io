@@ -4239,10 +4239,12 @@ input[type="button"].btn-block {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
+  color: #000;
 }
 
 .nav-link:hover, .nav-link:focus {
   text-decoration: none;
+  color: #aa0000;
 }
 
 .nav-link.disabled {
@@ -4321,7 +4323,7 @@ input[type="button"].btn-block {
 }
 
 .navbar {
-  position: relative;
+  position: fixed;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
@@ -4331,6 +4333,13 @@ input[type="button"].btn-block {
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+}
+
+.navbar-transparent {
+	background-color: transparent !important;
+	box-shadow: none;
+	color: #ffffff;
+	padding-top: 20px !important;
 }
 
 .navbar .container,
@@ -4353,10 +4362,13 @@ input[type="button"].btn-block {
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
+  color: #000;
+  text-transform: uppercase;
 }
 
 .navbar-brand:hover, .navbar-brand:focus {
   text-decoration: none;
+  color: #aa0000;
 }
 
 .navbar-nav {
@@ -6700,7 +6712,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: rgba(0,0,0,0.5) !important;
+  background-color: rgba(0,0,0,0.2) !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
